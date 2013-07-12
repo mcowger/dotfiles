@@ -1,101 +1,50 @@
-# history
-HISTFILE=~/.zsh_history
-HISTSIZE=10000
-SAVEHIST=100000
-setopt appendhistory autocd extendedglob
-setopt EXTENDED_HISTORY		# puts timestamps in the history
- 
- 
-BLACK="%{"$'\033[01;30m'"%}"
-GREEN="%{"$'\033[01;32m'"%}"
-RED="%{"$'\033[01;31m'"%}"
-YELLOW="%{"$'\033[01;33m'"%}"
-BLUE="%{"$'\033[01;34m'"%}"
-BOLD="%{"$'\033[01;39m'"%}"
-NORM="%{"$'\033[00m'"%}"
- 
-autoload -Uz vcs_info
- 
-# prompt (if running screen, show window #)
-if [ x$WINDOW != x ]; then
-    export PS1="$WINDOW:%~%# "
-else
-      export PS1="
-<${YELLOW}%~${NORM}>
-${RED}%n${YELLOW}@${BLUE}%U%m%u$%(!.#.$) "
-    #export PS1="[${RED}%n${YELLOW}@${BLUE}%U%m%u$:${GREEN}%2c${NORM}]%(!.#.$) "
-    #right prompt - time/date stamp
-    #export RPS1="${GREEN}(%D{%m-%d %H:%M})${NORM}"
-    # this right prompt is for any kind of repository info - svn, git, mercurial ,etc. courtesy of vcs_info
-    export RPS1="${YELLOW}%1v${NORM}"
-fi
- 
-# format titles for screen and rxvt
-function title() {
-  # escape '%' chars in $1, make nonprintables visible
-  a=${(V)1//\%/\%\%}
- 
-  # Truncate command, and join lines.
-  a=$(print -Pn "%40>...>$a" | tr -d "\n")
- 
-  case $TERM in
-  screen)
-    print -Pn "\ek$a:$3\e\\"      # screen title (in ^A")
-    ;;
-  xterm*|rxvt)
-    print -Pn "\e]2;$2 | $a:$3\a" # plain xterm title
-    ;;
-  esac
-}
- 
-# precmd is called just before the prompt is printed
-function precmd() {
-  title "zsh" "$USER@%m" "%55<...<%~"
-  psvar=()
-  vcs_info
-  [[ -n $vcs_info_msg_0_ ]] && psvar[1]="$vcs_info_msg_0_"
-}
- 
-# preexec is called just before any command line is executed
-function preexec() {
-  title "$1" "$USER@%m" "%35<...<%~"
-}
- 
+# Path to your oh-my-zsh configuration.
+ZSH=$HOME/.oh-my-zsh
 
-# vi editing
-# this prevents me from deleting a word using ESC-Backspace
-#bindkey -v
- 
-# colorful listings
-zmodload -i zsh/complist
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
- 
-autoload -U compinit
-compinit
- 
-# aliases
+# Set name of the theme to load.
+# Look in ~/.oh-my-zsh/themes/
+# Optionally, if you set this to "random", it'll load a random theme each
+# time that oh-my-zsh is loaded.
+ZSH_THEME="ys"
 
-alias j=jobs
-if ls -F --color=auto >&/dev/null; then
-  alias ls="ls --color=auto -F"
-else
-  alias ls="ls -F"
-fi
-alias ll="ls -l"
-alias ..='cd ..'
-alias .='pwd'
-alias grep='grep -E --color=always'
+# Example aliases
+# alias zshconfig="mate ~/.zshrc"
+# alias ohmyzsh="mate ~/.oh-my-zsh"
 
- 
-# functions
-setenv() { export $1=$2 }  # csh compatibility
- 
-#bash style ctrl-a (beginning of line) and ctrl-e (end of line)
-bindkey '^a' beginning-of-line
-bindkey '^e' end-of-line
-# key bindings
- 
- 
+# Set to this to use case-sensitive completion
+# CASE_SENSITIVE="true"
+
+# Comment this out to disable bi-weekly auto-update checks
+# DISABLE_AUTO_UPDATE="true"
+
+# Uncomment to change how often before auto-updates occur? (in days)
+# export UPDATE_ZSH_DAYS=13
+
+# Uncomment following line if you want to disable colors in ls
+# DISABLE_LS_COLORS="true"
+
+# Uncomment following line if you want to disable autosetting terminal title.
+# DISABLE_AUTO_TITLE="true"
+
+# Uncomment following line if you want to disable command autocorrection
+DISABLE_CORRECTION="true"
+
+# Uncomment following line if you want red dots to be displayed while waiting for completion
+COMPLETION_WAITING_DOTS="true"
+
+# Uncomment following line if you want to disable marking untracked files under
+# VCS as dirty. This makes repository status check for large repositories much,
+# much faster.
+# DISABLE_UNTRACKED_FILES_DIRTY="true"
+
+# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
+# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+plugins=(git brew textmate)
+
+source $ZSH/oh-my-zsh.sh
+
+# Customize to your needs...
+export PATH=$PATH:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin
+
 export EDITOR="/usr/local/bin/mate -w"
-
-PATH=/usr/local/bin:$PATH
