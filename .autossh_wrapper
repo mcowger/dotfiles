@@ -1,0 +1,14 @@
+#!/bin/bash
+if [ $1 == '-t' ]; then ATTR="-t "; shift; fi
+ADDR=$1; shift
+
+while [ `echo $1 | egrep -c "^\-[a-zA-Z]$"` -eq 1 ]; do
+  SSH_ATTR="${SSH_ATTR} $1"; shift
+done
+
+export AUTOSSH="/usr/local/bin/autossh"
+#export AUTOSSH_LOGFILE="/tmp/autossh.log"
+#export AUTOSSH_DEBUG=no
+export AUTOSSH_PORT=$[ ( $RANDOM % 1000 ) + 20000 ]
+
+${AUTOSSH} ${ATTR} "${ADDR}" ${SSH_ATTR} -- "$@"

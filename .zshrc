@@ -63,6 +63,10 @@ ec2() {
     ssh -i ~/.ssh/id_dsa.amazon ec2-user@"$*"
 }
 
+assh() {
+  ~/.autossh_wrapper $*
+}
+
 PATH=/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 export PATH=~/pebble-dev/PebbleSDK-2.0-BETA2/bin:/Volumes/DataDisk/mcowger/jython2.5.2/bin:/usr/local/bin:$PATH
