@@ -49,7 +49,7 @@ source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
 
-export EDITOR="/usr/local/bin/rmate -w"
+export EDITOR="/usr/bin/rmate -w"
 
 snapcli(){
   sudo /usr/snapcli/snapcli
