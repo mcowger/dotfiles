@@ -75,4 +75,12 @@ export PROMPT='%F{blue}[`hostname -s`]%f %F{green}%2c%f: '
 #export RPROMPT="$(git_prompt_info) %F{blue}] %F{green}%D{%L:%M} %F{yellow}%D{%p}%f %F{green}$(battery_pct_remaining)%%%f"
 export RPROMPT="$(git_prompt_info) %F{blue}]%f"
 
+
+if [[ `uname` == "Linux" ]] ; then
+	export POWERLINE_CONFIG_PATH=~/.config/powerline.linux
+fi
+if [[ `uname` == "Darwin" ]] ; then
+	export POWERLINE_CONFIG_PATH=~/.config/powerline.osx
+fi
+
 test -z "$TMUX" && (tmux attach -t default|| tmux new-session -s default)
