@@ -69,7 +69,7 @@ assh() {
 
 PATH=/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
-export PATH=~/pebble-dev/PebbleSDK-2.0-BETA2/bin:/Volumes/DataDisk/mcowger/jython2.5.2/bin:/usr/local/bin:$PATH
+export PATH=~/Library/Python/2.7/bin:~/pebble-dev/PebbleSDK-2.0-BETA2/bin:/Volumes/DataDisk/mcowger/jython2.5.2/bin:/usr/local/bin:$PATH
 
 export PROMPT='%F{blue}[`hostname -s`]%f %F{green}%2c%f: '
 #export RPROMPT="$(git_prompt_info) %F{blue}] %F{green}%D{%L:%M} %F{yellow}%D{%p}%f %F{green}$(battery_pct_remaining)%%%f"
@@ -82,5 +82,5 @@ fi
 if [[ `uname` == "Darwin" ]] ; then
 	export POWERLINE_CONFIG_PATH=~/.config/powerline.osx
 fi
-
-test -z "$TMUX" && (tmux attach -t default|| tmux new-session -s default)
+# 
+# test -z "$TMUX" && (tmux attach -t default|| tmux new-session -s default)
