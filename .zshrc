@@ -86,4 +86,4 @@ if [[ `uname` == "Darwin" ]] ; then
 	export POWERLINE_CONFIG_PATH=~/.config/powerline.osx
 fi
  
-test -z "$TMUX" && (tmux attach -t default|| tmux new-session -s default)
+test -z "$SSH_CONNECTION" && test -z "$TMUX" && (tmux attach -t default || tmux new-session -s default)
