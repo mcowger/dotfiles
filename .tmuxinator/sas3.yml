@@ -24,7 +24,7 @@ windows:
       layout: 5b2e,290x97,0,0{69x97,0,0[69x50,0,0,0,69x46,0,51,3],220x97,70,0[220x15,70,0,4,220x81,70,16,5]}
       panes:
         - rqinfo
-        - rq-dashboard
+        - rq-dashboard 
         - redis-server /usr/local/etc/redis.conf
         - redis-cli
   - rqworkers:
@@ -53,3 +53,4 @@ windows:
         - python vmbuilder.py -c vmbuilder -q BUILDER
         - python vminstaller.py -c vmready -q VMINSTALLER
         - python mdmManager.py -c ready -q MDM
+        - python webinterface.py

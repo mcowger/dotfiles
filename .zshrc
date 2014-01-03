@@ -63,7 +63,7 @@ ec2() {
     ssh -i ~/.ssh/id_dsa.amazon ec2-user@"$*"
 }
 
-assh() {
+ssh() {
   ~/.autossh_wrapper $*
 }
 
