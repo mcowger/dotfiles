@@ -79,8 +79,8 @@ export PROMPT='%F{blue}[%n@%m]%f[%?] %F{green}%2c%f:
 → '
 export RPROMPT="$(git_prompt_info) %F{blue}]%f"
 
-bindkey "\e\e[D" backward-word # alt + <-
-bindkey "\e\e[C" forward-word # alt + -> 
+bindkey "^[[1;3D" backward-word # alt + <-
+bindkey "^[[1;3C" forward-word # alt + -> 
 
 
 if [[ `uname` == "Linux" ]] ; then
