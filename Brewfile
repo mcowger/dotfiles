@@ -4,3 +4,7 @@ wget
 tmux
 openconnect
 cloudfoundry-cli
+brew-cask
+s3cmd
+zsh
+python3
