@@ -2,7 +2,6 @@ aria2
 augeas
 autoconf
 automake
-brew-cask
 cloudfoundry-cli
 cmake
 dialog
