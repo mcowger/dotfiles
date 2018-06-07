@@ -1,0 +1,3 @@
+[submodule "fish/cf-completions-fish"]
+	path = fish/cf-completions-fish
+	url = https://github.com/jsoo1/cf-completions-fish.git
