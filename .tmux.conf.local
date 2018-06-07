@@ -261,7 +261,10 @@ set -g mouse on
 
 set -g prefix Escape
 unbind C-b
-#unbind C-a
+unbind C-a
+
+set -g prefix2 Escape                        # GNU-Screen compatible prefix
+
 
 bind-key Escape send-prefix
 bind | split-window -h
