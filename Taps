@@ -1,11 +1,7 @@
-## brew cask and more versions of casks
-caskroom/versions
-
-## Add tap for Pivotal
-pivotal/tap
-
-## Tap for packer
-homebrew/binary
-
-## Tap for tmate
-nviennot/tmate
+cloudfoundry/tap
+homebrew/cask
+homebrew/cask-fonts
+homebrew/cask-versions
+homebrew/core
+homebrew/services
+johanhaleby/kubetail

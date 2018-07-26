@@ -1,1 +1,0 @@
-../cf-completions-fish/cf-completions.fish
