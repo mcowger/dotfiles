@@ -1,89 +1,178 @@
-# Path to your oh-my-zsh installation.
-export ZSH=/Users/mcowger/.oh-my-zsh
 
-# Set name of the theme to load.
-# Look in ~/.oh-my-zsh/themes/
-# Optionally, if you set this to "random", it'll load a random theme each
-# time that oh-my-zsh is loaded.
-ZSH_THEME="bureau"
+prompt_zsh_battery_level() {
+  local percentage1=`pmset -g ps  |  sed -n 's/.*[[:blank:]]+*\(.*%\).*/\1/p'`
+  local percentage=`echo "${percentage1//\%}"`
+  local color='%F{red}'
+  local symbol="\uf00d"
+  pmset -g ps | grep "discharging" > /dev/null
+  if [ $? -eq 0 ]; then
+    local charging="false";
+  else
+    local charging="true";
+  fi
+  if [ $percentage -le 20 ]
+  then symbol='\uf579' ; color='%F{red}' ;
+    #10%
+  elif [ $percentage -gt 19 ] && [ $percentage -le 30 ]
+  then symbol="\uf57a" ; color='%F{red}' ;
+    #20%
+  elif [ $percentage -gt 29 ] && [ $percentage -le 40 ]
+  then symbol="\uf57b" ; color='%F{yellow}' ;
+    #35%
+  elif [ $percentage -gt 39 ] && [ $percentage -le 50 ]
+  then symbol="\uf57c" ; color='%F{yellow}' ;
+    #45%
+  elif [ $percentage -gt 49 ] && [ $percentage -le 60 ]
+  then symbol="\uf57d" ; color='%F{blue}' ;
+    #55%
+  elif [ $percentage -gt 59 ] && [ $percentage -le 70 ]
+  then symbol="\uf57e" ; color='%F{blue}' ;
+    #65%
+  elif [ $percentage -gt 69 ] && [ $percentage -le 80 ]
+  then symbol="\uf57f" ; color='%F{blue}' ;
+    #75%
+  elif [ $percentage -gt 79 ] && [ $percentage -le 90 ]
+  then symbol="\uf580" ; color='%F{blue}' ;
+    #85%
+  elif [ $percentage -gt 89 ] && [ $percentage -le 99 ]
+  then symbol="\uf581" ; color='%F{blue}' ;
+    #85%
+  elif [ $percentage -gt 98 ]
+  then symbol="\uf578" ; color='%F{green}' ;
+    #100%
+  fi
+  if [ $charging = "true" ];
+  then color='%F{green}'; if [ $percentage -gt 98 ]; then symbol='\uf584'; fi
+  fi
+  echo -n "%{$color%}$symbol" ;
+}
 
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
+zsh_internet_signal(){
+  local color
+  local symbol="\uf7ba"
+  if ifconfig en0 | grep inactive &> /dev/null; then
+  color="%F{red}"
+  else
+  color="%F{blue}"
+  fi
+  echo -n "%{$color%}$symbol "
+}
 
-# Uncomment the following line to use hyphen-insensitive completion. Case
-# sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
 
-# Uncomment the following line to disable bi-weekly auto-update checks.
-# DISABLE_AUTO_UPDATE="true"
+export POWERLEVEL9K_INSTALLATION_PATH=$ANTIGEN_BUNDLES/bhilburn/powerlevel9k
+export DEFAULT_USER="mattcowger"
 
-# Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
+POWERLEVEL9K_MODE='nerdfont-complete'
+POWERLEVEL9K_SHORTEN_DIR_LENGTH=10
+PPOWERLEVEL9K_SHORTEN_DELIMITER=""
+POWERLEVEL9K_SHORTEN_STRATEGY="truncate_from_right"
+POWERLEVEL9K_PROMPT_ON_NEWLINE=true
+POWERLEVEL9K_DIR_SHOW_WRITABLE=true
+POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR=''
+POWERLEVEL9K_RIGHT_SEGMENT_SEPARATOR=''
+POWERLEVEL9K_LEFT_SUBSEGMENT_SEPARATOR=''
+POWERLEVEL9K_RIGHT_SUBSEGMENT_SEPARATOR=''
+POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX="%F{blue}\u256D\u2500%F{white}"
+POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="%F{blue}\u2570\uf460%F{white} "
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon context dir  root_indicator vcs)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(kubecontext)
 
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
+POWERLEVEL9K_OS_ICON_BACKGROUND="clear"
 
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
 
-# Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
+POWERLEVEL9K_VCS_MODIFIED_BACKGROUND="clear"
+POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND="clear"
+POWERLEVEL9K_VCS_MODIFIED_FOREGROUND="yellow"
+POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND="yellow"
+POWERLEVEL9K_DIR_HOME_BACKGROUND="clear"
+POWERLEVEL9K_DIR_HOME_FOREGROUND="blue"
+POWERLEVEL9K_DIR_HOME_SUBFOLDER_BACKGROUND="clear"
+POWERLEVEL9K_DIR_HOME_SUBFOLDER_FOREGROUND="blue"
+POWERLEVEL9K_DIR_WRITABLE_FORBIDDEN_BACKGROUND="clear"
+POWERLEVEL9K_DIR_WRITABLE_FORBIDDEN_FOREGROUND="red"
+POWERLEVEL9K_DIR_DEFAULT_BACKGROUND="clear"
+POWERLEVEL9K_DIR_DEFAULT_FOREGROUND="white"
+POWERLEVEL9K_ROOT_INDICATOR_BACKGROUND="red"
+POWERLEVEL9K_ROOT_INDICATOR_FOREGROUND="white"
+POWERLEVEL9K_STATUS_OK_BACKGROUND="clear"
+POWERLEVEL9K_STATUS_OK_FOREGROUND="green"
+POWERLEVEL9K_STATUS_ERROR_BACKGROUND="clear"
+POWERLEVEL9K_STATUS_ERROR_FOREGROUND="red"
+POWERLEVEL9K_TIME_BACKGROUND="clear"
+POWERLEVEL9K_TIME_FOREGROUND="cyan"
+POWERLEVEL9K_COMMAND_EXECUTION_TIME_BACKGROUND='clear'
+POWERLEVEL9K_COMMAND_EXECUTION_TIME_FOREGROUND='magenta'
+POWERLEVEL9K_BACKGROUND_JOBS_BACKGROUND='clear'
+POWERLEVEL9K_BACKGROUND_JOBS_FOREGROUND='green'
 
-# Uncomment the following line to display red dots whilst waiting for completion.
-# COMPLETION_WAITING_DOTS="true"
+POWERLEVEL9K_KUBECONTEXT_BACKGROUND='clear'
+POWERLEVEL9K_KUBECONTEXT_FOREGROUND='magenta'
 
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
+POWERLEVEL9K_VCS_HIDE_TAGS=true
+DISABLE_UPDATE_PROMPT=true
 
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# HIST_STAMPS="mm/dd/yyyy"
 
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
 
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
 
-# User configuration
 
-export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin"
-# export MANPATH="/usr/local/man:$MANPATH"
 
-source $ZSH/oh-my-zsh.sh
+source ~/antigen.zsh
 
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
+antigen use oh-my-zsh
+antigen bundle git
 
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
+antigen bundle zsh-users/zsh-syntax-highlighting
+antigen bundle common-aliases
+antigen bundle tarruda/zsh-autosuggestions
+antigen bundle command-not-found
+antigen bundle autojump
+antigen bundle brew
 
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
+antigen bundle osx
+antigen bundle zsh-users/zsh-history-substring-search
 
-# ssh
-# export SSH_KEY_PATH="~/.ssh/dsa_id"
+antigen theme bhilburn/powerlevel9k powerlevel9k
+#antigen theme https://github.com/denysdovhan/spaceship-prompt spaceship
 
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
+auto-ls () {
+	emulate -L zsh;
+	# explicit sexy ls'ing as aliases arent honored in here.
+	hash gls >/dev/null 2>&1 && CLICOLOR_FORCE=1 gls -aFh --color --group-directories-first || ls
+}
+chpwd_functions=( auto-ls $chpwd_functions )
 
-export WORKON_HOME=$HOME/.virtualenvs
-export PROJECT_HOME=$HOME/Projects
-export VIRTUALENVWRAPPER_WORKON_CD=1
-source /usr/local/bin/virtualenvwrapper.sh
+
+# Setup zsh-autosuggestions
+source ~/.zsh-autosuggestions/autosuggestions.zsh
+
+# Enable autosuggestions automatically
+zle-line-init() {
+    zle autosuggest-start
+}
+
+zle -N zle-line-init
+
+
+antigen apply
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+
+ssh-copy-config(){
+  ssh ${1} "curl -L git.io/antigen > antigen.zsh"
+  scp -C -q -r .kube .zshrc .tmux.conf .tmux .tmux.conf.local ${1}:
+}
+eval $(thefuck --alias)
+
+export VAULT_ADDR='https://vault.pez.pivotal.io:8200'
+
+export PATH=$PATH:/usr/local/Cellar/bosh-cli/4.0.1/bin
+export BOSH_CLIENT=ops_manager 
+export BOSH_CLIENT_SECRET=FKxXGjy4pbXd5cCNcDtPw-um991J9rfF 
+export BOSH_CA_CERT=/var/tempest/workspaces/default/root_ca_certificate 
+export BOSH_ENVIRONMENT=10.193.225.151
+
+export GOPATH=$HOME/workspace/go
+
+export NVM_DIR="$HOME/.nvm"
+. "/usr/local/opt/nvm/nvm.sh"
+
